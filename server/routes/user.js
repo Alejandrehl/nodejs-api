@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const User = require('../models/user');
 
 app.get('/user', function(req, res) {
     res.json('get LOCAL USER!!!');
@@ -7,16 +8,27 @@ app.get('/user', function(req, res) {
 
 app.post('/user', function(req, res) {
     let body = req.body;
-    if (body.name === undefined) {
-        res.status(400).json({
-            ok: false,
-            message: 'The name is required.'
-        });
-    } else {
+    let user = new User({
+        name: body.name,
+        age: body.age,
+        email: body.email,
+        password: body.password,
+        role: body.role
+    });
+
+    user.save((err, user) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
         res.json({
-            user: body
+            ok: true,
+            user: user
         });
-    }
+    });
 });
 
 app.put('/user/:id', function(req, res) {
