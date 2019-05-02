@@ -17,7 +17,7 @@ app.post('/user', function(req, res) {
         role: body.role
     });
 
-    user.save((err, user) => {
+    user.save((err, savedUser) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
@@ -27,7 +27,7 @@ app.post('/user', function(req, res) {
 
         res.json({
             ok: true,
-            user: user
+            user: savedUser
         });
     });
 });
