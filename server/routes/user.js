@@ -7,8 +7,6 @@ app.get('/user', function(req, res) {
 
 app.post('/user', function(req, res) {
     let body = req.body;
-    console.log(body);
-    console.log(body.name);
     if (body.name === undefined) {
         res.status(400).json({
             ok: false,
