@@ -34,8 +34,20 @@ app.post('/user', function(req, res) {
 
 app.put('/user/:id', function(req, res) {
     let id = req.params.id;
-    res.json({
-        id
+    let body = req.body;
+
+    User.findByIdAndUpdate(id, body, (err, savedUser) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        res.json({
+            ok: true,
+            user: savedUser
+        });
     });
 });
 
