@@ -36,13 +36,15 @@ app.put('/user/:id', function(req, res) {
     let id = req.params.id;
     let body = req.body;
 
-    User.findByIdAndUpdate(id, body, (err, savedUser) => {
+    User.findByIdAndUpdate(id, body, { new: true }, (err, savedUser) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
                 err
             });
         }
+        console.log("BODY: ", body);
+        console.log(savedUser);
 
         res.json({
             ok: true,
